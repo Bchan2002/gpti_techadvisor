@@ -123,27 +123,47 @@ const Results = () => {
         headStyles: { fillColor: [13, 110, 253] }
       });
 
-      // SoloTodo links
+      // Store links
       const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY : 150;
       doc.setFontSize(14);
-      doc.text('Enlaces de Compra (SoloTodo)', 14, finalY + 15);
+      doc.setTextColor(0, 0, 0);
+      doc.text('Enlaces de Búsqueda en Tiendas', 14, finalY + 15);
       doc.setFontSize(10);
-      doc.setTextColor(60, 60, 255);
 
       let currentY = finalY + 22;
-      computers.forEach((pc) => {
-        if (currentY > 280) {
+      computers.forEach((pc, index) => {
+        if (currentY > 260) {
           doc.addPage();
           currentY = 20;
           doc.setFontSize(14);
           doc.setTextColor(0, 0, 0);
-          doc.text('Enlaces de Compra (SoloTodo) - Continuación', 14, currentY);
+          doc.text('Enlaces de Búsqueda en Tiendas - Continuación', 14, currentY);
           currentY += 10;
           doc.setFontSize(10);
-          doc.setTextColor(60, 60, 255);
         }
-        doc.textWithLink(pc.name, 14, currentY, { url: pc.solotodoUrl });
+
+        // Computer name
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(11);
+        doc.text(`${index + 1}. ${pc.name}`, 14, currentY);
         currentY += 6;
+
+        // Store links
+        doc.setFontSize(9);
+        doc.setTextColor(60, 60, 255);
+        if (pc.searchUrls?.solotodo) {
+          doc.textWithLink('  • SoloTodo', 14, currentY, { url: pc.searchUrls.solotodo });
+          currentY += 5;
+        }
+        if (pc.searchUrls?.falabella) {
+          doc.textWithLink('  • Falabella', 14, currentY, { url: pc.searchUrls.falabella });
+          currentY += 5;
+        }
+        if (pc.searchUrls?.ripley) {
+          doc.textWithLink('  • Ripley', 14, currentY, { url: pc.searchUrls.ripley });
+          currentY += 5;
+        }
+        currentY += 3; // Espacio entre computadores
       });
 
       doc.save('recomendaciones-tech-advisor.pdf');
@@ -274,15 +294,34 @@ const Results = () => {
                     )}
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
-                    <a
-                      href={computer.solotodoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full bg-gradient-to-r from-green-500 to-green-600 text-white text-center py-3 rounded-lg font-bold hover:from-green-600 hover:to-green-700 transition"
-                    >
-                      Ver en SoloTodo
-                    </a>
+                  <div className="mt-4 pt-4 border-t border-gray-200 space-y-3">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Buscar en tiendas:</p>
+                    <div className="grid grid-cols-3 gap-2">
+                      <a
+                        href={computer.searchUrls?.solotodo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block bg-blue-600 text-white text-center py-2 px-3 rounded-lg text-sm font-semibold hover:bg-blue-700 transition"
+                      >
+                        SoloTodo
+                      </a>
+                      <a
+                        href={computer.searchUrls?.falabella}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block bg-green-600 text-white text-center py-2 px-3 rounded-lg text-sm font-semibold hover:bg-green-700 transition"
+                      >
+                        Falabella
+                      </a>
+                      <a
+                        href={computer.searchUrls?.ripley}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block bg-purple-600 text-white text-center py-2 px-3 rounded-lg text-sm font-semibold hover:bg-purple-700 transition"
+                      >
+                        Ripley
+                      </a>
+                    </div>
                     <button
                       onClick={() => toggleCompare(computer.id)}
                       className={`block w-full text-center font-semibold px-4 py-3 rounded-lg transition ${

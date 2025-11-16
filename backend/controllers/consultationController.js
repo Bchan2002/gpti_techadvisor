@@ -64,6 +64,16 @@ const createConsultation = async (req, res, next) => {
       where: { id: req.user.id }
     });
 
+    // Helper function to generate search URLs
+    const generateSearchUrls = (computerName) => {
+      const searchQuery = encodeURIComponent(computerName);
+      return {
+        solotodo: `https://www.solotodo.cl/search?search=${searchQuery}`,
+        falabella: `https://www.falabella.com/falabella-cl/search?Ntt=${searchQuery}`,
+        ripley: `https://simple.ripley.cl/search/${searchQuery}`
+      };
+    };
+
     res.status(201).json({
       success: true,
       message: 'Consulta procesada exitosamente',
@@ -88,7 +98,7 @@ const createConsultation = async (req, res, next) => {
           screen: comp.screen,
           weight: comp.weight,
           imageUrl: comp.imageUrl,
-          solotodoUrl: comp.solotodoUrl
+          searchUrls: generateSearchUrls(comp.name)
         }))
       }
     });

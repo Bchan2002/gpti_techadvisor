@@ -121,17 +121,35 @@ const Compare = () => {
               {/* Footer - Actions */}
               <tfoot className="bg-gray-50">
                 <tr>
-                  <td className="p-4 font-semibold text-gray-700">Acciones</td>
+                  <td className="p-4 font-semibold text-gray-700">Buscar en Tiendas</td>
                   {selectedComputers.map((pc) => (
                     <td key={pc.id} className="p-4">
-                      <a
-                        href={pc.solotodoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full text-center bg-green-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition"
-                      >
-                        Ver en SoloTodo
-                      </a>
+                      <div className="space-y-2">
+                        <a
+                          href={pc.searchUrls?.solotodo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-center bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded hover:bg-blue-700 transition"
+                        >
+                          SoloTodo
+                        </a>
+                        <a
+                          href={pc.searchUrls?.falabella}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-center bg-green-600 text-white text-xs font-semibold px-3 py-2 rounded hover:bg-green-700 transition"
+                        >
+                          Falabella
+                        </a>
+                        <a
+                          href={pc.searchUrls?.ripley}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-center bg-purple-600 text-white text-xs font-semibold px-3 py-2 rounded hover:bg-purple-700 transition"
+                        >
+                          Ripley
+                        </a>
+                      </div>
                     </td>
                   ))}
                 </tr>

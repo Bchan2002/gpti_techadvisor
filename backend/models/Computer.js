@@ -79,7 +79,7 @@ const Computer = sequelize.define('Computer', {
   },
   solotodoUrl: {
     type: DataTypes.STRING(500),
-    allowNull: false,
+    allowNull: true,
     field: 'solotodo_url'
   },
   uses: {
