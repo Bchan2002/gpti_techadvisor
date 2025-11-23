@@ -1,0 +1,24 @@
+services:
+  # Backend API
+  - type: web
+    name: tech-advisor-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tech-advisor-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+
+databases:
+  # PostgreSQL Database
+  - name: tech-advisor-db
+    databaseName: tech_advisor
+    user: tech_advisor_user
